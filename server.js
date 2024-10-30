@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const Web3 = require('web3');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -11,27 +12,27 @@ app.use(bodyParser.json());
 // Serve static files from the frontend/public directory
 app.use(express.static(path.join(__dirname, 'public'))); 
 
-// Connect to MongoDB
+// Connect to MongoDB (optional, added to keep using it for other features)
 mongoose.connect('mongodb://localhost:27017/automotive_erp', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-// Define Item and Shipment schemas
-const itemSchema = new mongoose.Schema({
-    name: { type: String, required: true }, 
-    quantity: { type: Number, required: true }, 
-});
+// Set up Web3
+const web3 = new Web3('http://localhost:8545'); // Ethereum node address
+const contractABI = [/* ABI from your compiled contract */];
+const contractAddress = '0xYourContractAddress'; // Replace with your deployed contract address
+const contract = new web3.eth.Contract(contractABI, contractAddress);
 
+// Define Shipment schema
 const shipmentSchema = new mongoose.Schema({
     trackingNumber: { type: String, required: true }, 
     status: { type: String, required: true }, 
 });
 
-const Item = mongoose.model('Item', itemSchema);
 const Shipment = mongoose.model('Shipment', shipmentSchema);
 
-// API to add inventory items
+// API to add inventory items via smart contract
 app.post('/api/inventory', async (req, res) => {
     const { name, quantity } = req.body;
 
@@ -40,21 +41,33 @@ app.post('/api/inventory', async (req, res) => {
         return res.status(400).json({ message: 'Name and quantity are required' });
     }
 
-    const newItem = new Item({ name, quantity });
-    await newItem.save();
-    res.status(201).send(newItem);
-});
-
-// API to get all inventory items
-app.get('/api/inventory', async (req, res) => {
+    const accounts = await web3.eth.getAccounts();
+    
     try {
-        const items = await Item.find(); // Fetch all items from the database
-        res.status(200).json(items); // Send the items as a response
+        // Call the smart contract method to add the item
+        await contract.methods.addItem(name, quantity).send({ from: accounts[0] });
+        res.status(201).send({ message: 'Item added to smart contract successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching items' });
+        res.status(500).send({ message: 'Error adding item to smart contract' });
     }
 });
 
+// API to get all inventory items from the smart contract
+app.get('/api/inventory', async (req, res) => {
+    try {
+        const itemCount = await contract.methods.itemCount().call();
+        const items = [];
+
+        for (let i = 1; i <= itemCount; i++) {
+            const item = await contract.methods.getItem(i).call();
+            items.push({ name: item[0], quantity: item[1] });
+        }
+
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching items from smart contract' });
+    }
+});
 
 // API to add shipments
 app.post('/api/shipments', async (req, res) => {
@@ -73,30 +86,16 @@ app.post('/api/shipments', async (req, res) => {
 // API to get all shipments
 app.get('/api/shipments', async (req, res) => {
     try {
-        const shipments = await Shipment.find(); // Retrieve all shipments
-        res.status(200).json(shipments); // Send the shipments as a JSON response
+        const shipments = await Shipment.find(); 
+        res.status(200).json(shipments);
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving shipments' });
     }
 });
 
-// API to get a shipment by ID
-app.get('/api/shipments/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const shipment = await Shipment.findById(id); // Find shipment by ID
-        if (!shipment) {
-            return res.status(404).json({ message: 'Shipment not found' });
-        }
-        res.status(200).json(shipment); // Send the shipment as a JSON response
-    } catch (error) {
-        res.status(500).json({ message: 'Error retrieving shipment' });
-    }
-});
-
 // Serve index.html on root route
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public', 'index.html')); // Adjust this path if necessary
+    res.sendFile(path.join(__dirname, '../frontend/public', 'index.html')); 
 });
 
 // Start the server
