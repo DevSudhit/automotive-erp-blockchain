@@ -44,3 +44,19 @@ To set up the project locally, follow these steps:
 4. **Start the server:**
     npm start
 
+
+## Usage
+If you want to use the smart contract functionality, switch to the `blockchain_main` branch and follow these additional steps:
+
+1. **Switch to the blockchain branch:**
+   ```bash
+   git checkout blockchain_main
+2. **Set up your Ethereum environment** (like Ganache or a test network) and ensure it’s running.
+
+3. **Deploy your smart contract** using a tool like Truffle or Hardhat, and update the contractAddress in your server.js file accordingly.
+
+4. **Ensure your Web3.js** configuration points to the correct Ethereum node.
+
+5. **Add items or shipments via the API** and verify that transactions are recorded on the blockchain.
+
+
