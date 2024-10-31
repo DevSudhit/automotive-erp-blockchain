@@ -31,7 +31,7 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/DevSudhit/automotive-erp-blockchain.git
    cd automotive-erp-blockchain
 
 2. **Install dependencies for the backend:**
@@ -45,76 +45,18 @@ To set up the project locally, follow these steps:
     npm start
 
 
-## Setup Instructions For Etherium Contract
+## Usage
+If you want to use the smart contract functionality, switch to the `blockchain_main` branch and follow these additional steps:
 
-1. Clone the Repository
-```bash
-    git clone <repository-url>
-    cd automotive-erp-blockchain
+1. **Switch to the blockchain branch:**
+   ```bash
+   git checkout blockchain_main
+2. **Set up your Ethereum environment** (like Ganache or a test network) and ensure it’s running.
 
-2. **Install Dependencies**
-    Navigate to the backend directory and install the necessary packages:
+3. **Deploy your smart contract** using a tool like Truffle or Hardhat, and update the contractAddress in your server.js file accordingly.
 
-    ```bash
-    Copy code
-    cd backend
-    npm install
+4. **Ensure your Web3.js** configuration points to the correct Ethereum node.
 
-3. **Install Truffle and Ganache**
-    Globally install Truffle and Ganache:
-    ```bash
-    Copy code
-    npm install -g truffle
-    npm install -g ganache
+5. **Add items or shipments via the API** and verify that transactions are recorded on the blockchain.
 
-4. **Start Ganache**
-    Open a terminal and start Ganache:
-    ```bash
-    Copy code
-    ganache
-    This will start a local blockchain at http://localhost:8545.
 
-5. **Deploy Smart Contracts**
-    Make sure you are in the backend directory, and then migrate your smart contracts:
-    ```bash
-    Copy code
-    npx truffle migrate --network development
-
-6. **Start the Server**
-    Run the server to interact with the smart contracts:
-    ```bash
-    Copy code
-    npm start
-    The server will run on http://localhost:5001.
-
-## API Endpoints
-
-1. **Inventory**
-    Add Inventory Item
-
-    Endpoint: POST /api/inventory
-    Body:
-    json
-    Copy code
-    {
-    "id": "item_id",
-    "name": "item_name",
-    "quantity": "item_quantity"
-    }
-    Get All Inventory Items
-
-    Endpoint: GET /api/inventory
-
-2. **Shipments**
-    Add Shipment
-
-    Endpoint: POST /api/shipments
-    Body:
-    json
-    Copy code
-    {
-    "trackingNumber": "tracking_number"
-    }
-    Get All Shipments
-
-    Endpoint: GET /api/shipments
