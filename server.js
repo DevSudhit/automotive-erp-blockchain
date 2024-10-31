@@ -19,8 +19,8 @@ const web3 = new Web3('http://127.0.0.1:8545'); // Ethereum node address
 const inventoryContractABI = JSON.parse(fs.readFileSync(path.join(path.resolve(), 'build/contracts/InventoryContract.json'))).abi;
 const shipmentContractABI = JSON.parse(fs.readFileSync(path.join(path.resolve(), 'build/contracts/ShipmentContract.json'))).abi;
 
-const contractAddressInventory = '0xdc921bec93C5763eb3c32389B746B42b56d92009'; // Inventory contract address
-const contractAddressShipment = '0x6b79614C57Bd160ae8DDEE49f1AE6360Ea32CE7f'; // Shipment contract address
+const contractAddressInventory = '0xAc38Cc2e8339a718de4e955bd7964e2A09bFC0a5'; // Inventory contract address
+const contractAddressShipment = '0x6A44C8ef6a1b6B417e3fa5CD9f36b720Deb4003e'; // Shipment contract address
 
 const inventoryContract = new web3.eth.Contract(inventoryContractABI, contractAddressInventory);
 const shipmentContract = new web3.eth.Contract(shipmentContractABI, contractAddressShipment);
@@ -67,23 +67,25 @@ app.get('/api/inventory', async (req, res) => {
 
 // API to add shipments
 app.post('/api/shipments', async (req, res) => {
-    const { trackingNumber } = req.body;
+    const { trackingNumber, status } = req.body;
 
-    if (!trackingNumber) {
-        return res.status(400).json({ message: 'Tracking number is required' });
+    if (!trackingNumber || !status) {
+        return res.status(400).json({ message: 'Tracking number and status are required' });
     }
 
     const accounts = await web3.eth.getAccounts();
     try {
-        const gasPrice = await web3.eth.getGasPrice(); // Get current gas price
-        const gasLimit = 300000; // Set an appropriate gas limit
-        await shipmentContract.methods.createShipment(trackingNumber).send({ from: accounts[0], gasPrice: gasPrice, gas: gasLimit });
+        const gasPrice = await web3.eth.getGasPrice();
+        const gasLimit = 300000;
+        await shipmentContract.methods.createShipment(trackingNumber, status).send({ from: accounts[0], gasPrice, gas: gasLimit });
         res.status(201).send({ message: 'Shipment created successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'Error creating shipment' });
     }
 });
+
+
 
 // API to get all shipments
 app.get('/api/shipments', async (req, res) => {
@@ -102,10 +104,12 @@ app.get('/api/shipments', async (req, res) => {
 
         res.status(200).json(shipments);
     } catch (error) {
-        console.error(error);
+        console.error('Error retrieving shipments:', error);
         res.status(500).json({ message: 'Error retrieving shipments' });
     }
 });
+
+
 
 
 // Serve index.html on root route

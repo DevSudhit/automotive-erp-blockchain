@@ -10,10 +10,11 @@ contract ShipmentContract {
     mapping(uint => Shipment) public shipments;
     uint public shipmentCount;
 
-    function createShipment(string memory _trackingNumber) public {
+    function createShipment(string memory _trackingNumber, string memory _status) public {
         shipmentCount++;
-        shipments[shipmentCount] = Shipment(shipmentCount, _trackingNumber, "Pending");
+        shipments[shipmentCount] = Shipment(shipmentCount, _trackingNumber, _status);
     }
+
 
     function updateStatus(uint _id, string memory _status) public {
         require(_id > 0 && _id <= shipmentCount, "Invalid shipment ID");
