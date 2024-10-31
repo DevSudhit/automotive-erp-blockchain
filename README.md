@@ -48,10 +48,11 @@ To set up the project locally, follow these steps:
 
 ## Setup Instructions For Etherium Contract
 
-1. Clone the Repository
+1. **Clone the Repository**
 ```bash
-    git clone https://github.com/DevSudhit/automotive-erp-blockchain/tree/blockchain_main
+    git clone <repository-url>
     cd automotive-erp-blockchain
+```
 
 2. **Install Dependencies**
     Navigate to the backend directory and install the necessary packages:
