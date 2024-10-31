@@ -54,7 +54,7 @@ app.get('/api/inventory', async (req, res) => {
 
         for (let i = 1; i <= itemCount; i++) {
             const item = await inventoryContract.methods.getItem(i).call();
-            items.push({ id: item.id, name: item.name, quantity: item.quantity });
+            items.push({ id: item[0].toString(), name: item[1], quantity: item[2].toString() }); // Ensure proper conversion
         }
 
         res.status(200).json(items);
@@ -63,6 +63,7 @@ app.get('/api/inventory', async (req, res) => {
         res.status(500).json({ message: 'Error fetching items from smart contract' });
     }
 });
+
 
 // API to add shipments
 app.post('/api/shipments', async (req, res) => {
@@ -92,7 +93,11 @@ app.get('/api/shipments', async (req, res) => {
 
         for (let i = 1; i <= shipmentCount; i++) {
             const shipment = await shipmentContract.methods.getShipment(i).call();
-            shipments.push({ id: shipment.id, trackingNumber: shipment.trackingNumber, status: shipment.status });
+            shipments.push({ 
+                id: shipment[0].toString(), // Ensure proper conversion
+                trackingNumber: shipment[1], 
+                status: shipment[2] 
+            });
         }
 
         res.status(200).json(shipments);
@@ -101,6 +106,7 @@ app.get('/api/shipments', async (req, res) => {
         res.status(500).json({ message: 'Error retrieving shipments' });
     }
 });
+
 
 // Serve index.html on root route
 app.get('/', (req, res) => {
@@ -111,3 +117,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+//dummy commit
