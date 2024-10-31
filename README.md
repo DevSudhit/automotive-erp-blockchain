@@ -6,7 +6,7 @@ This project implements an Automotive ERP system utilizing blockchain technology
 ## Table of Contents
 - [Technologies Used](#technologies-used)
 - [Features](#features)
-- [Installation](#installation)
+- [Traditional ERP SYSTEM](#setup-instruction-for-normal-erp-system-using-mongodb)
 - [Setup Instructions For Etherium Contract](#setup-instructions-for-etherium-contract)
 - [API Endpoints](#api-endpoints)
 
@@ -24,7 +24,7 @@ This project implements an Automotive ERP system utilizing blockchain technology
 - Real-time tracking of automotive parts
 - Enhanced transparency across stakeholders
 
-## Installation
+## Setup Instruction FOR NORMAL ERP SYSTEM USING MONGODB
 To set up the project locally, follow these steps:
 
 1. Clone the repository:
