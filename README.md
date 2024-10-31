@@ -7,10 +7,8 @@ This project implements an Automotive ERP system utilizing blockchain technology
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- [Setup Instructions For Etherium Contract](#setup-instructions-for-etherium-contract)
+- [API Endpoints](#api-endpoints)
 
 ## Technologies Used
 - **Node.js**: Backend server
