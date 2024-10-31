@@ -50,7 +50,7 @@ To set up the project locally, follow these steps:
 
 1. Clone the Repository
 ```bash
-    git clone <repository-url>
+    git clone https://github.com/DevSudhit/automotive-erp-blockchain/tree/blockchain_main
     cd automotive-erp-blockchain
 
 2. **Install Dependencies**
