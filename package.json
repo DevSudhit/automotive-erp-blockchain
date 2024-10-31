@@ -4,12 +4,20 @@
   "description": "Blockchain-based ERP System for Automotive Industry",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "truffle test",
+    "migrate": "truffle migrate --reset --network development",
+    "compile": "truffle compile"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "body-parser": "^1.19.0",
-    "mongoose": "^5.11.15"
+    "express": "^4.21.1",
+    "mongoose": "^5.11.15",
+    "web3": "^4.14.0"
+  },
+  "devDependencies": {
+    "solc": "^0.5.16",
+    "truffle": "^5.11.5"
   },
   "keywords": [],
   "author": "",
