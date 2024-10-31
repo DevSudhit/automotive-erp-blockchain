@@ -48,7 +48,7 @@ To set up the project locally, follow these steps:
 
 1. **Clone the Repository**
 ```bash
-    git clone <repository-url>
+    git clone https://github.com/DevSudhit/automotive-erp-blockchain/tree/blockchain_main/
     cd automotive-erp-blockchain
 ```
 
@@ -56,34 +56,30 @@ To set up the project locally, follow these steps:
     Navigate to the backend directory and install the necessary packages:
 
     ```bash
-    Copy code
     cd backend
     npm install
 
 3. **Install Truffle and Ganache**
     Globally install Truffle and Ganache:
     ```bash
-    Copy code
     npm install -g truffle
     npm install -g ganache
 
 4. **Start Ganache**
     Open a terminal and start Ganache:
     ```bash
-    Copy code
+    npm truffle compile
     ganache
     This will start a local blockchain at http://127.0.0.1:8545.
 
 5. **Deploy Smart Contracts**
     Make sure you are in the backend directory, and then migrate your smart contracts:
     ```bash
-    Copy code
     npx truffle migrate --network development
 
 6. **Start the Server**
     Run the server to interact with the smart contracts:
     ```bash
-    Copy code
     npm start
     The server will run on http://localhost:5001.
 
