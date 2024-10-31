@@ -48,5 +48,5 @@ If you want to use the smart contract functionality, switch to the `blockchain_m
 1. **Switch to the blockchain branch:**
    ```bash
    git checkout blockchain_main
-2. **Follow README.md File of that branch
+2. **Follow README.md File of that branch**
 
