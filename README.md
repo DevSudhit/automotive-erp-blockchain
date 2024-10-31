@@ -7,11 +7,8 @@ This project implements an Automotive ERP system utilizing blockchain technology
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
-
+- [Setup Instructions For Etherium Contract](#Usage)
+  
 ## Technologies Used
 - **Node.js**: Backend server
 - **Express.js**: Web framework for Node.js
@@ -51,12 +48,5 @@ If you want to use the smart contract functionality, switch to the `blockchain_m
 1. **Switch to the blockchain branch:**
    ```bash
    git checkout blockchain_main
-2. **Set up your Ethereum environment** (like Ganache or a test network) and ensure it’s running.
-
-3. **Deploy your smart contract** using a tool like Truffle or Hardhat, and update the contractAddress in your server.js file accordingly.
-
-4. **Ensure your Web3.js** configuration points to the correct Ethereum node.
-
-5. **Add items or shipments via the API** and verify that transactions are recorded on the blockchain.
-
+2. **Follow README.md File of that branch
 
